@@ -1,0 +1,21 @@
+button {
+  display: flex;
+  font-size: 25px;
+  height: 50px;
+  width: 50px;
+
+}
+table {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  height: 200vh;
+}
+
+td {
+  margin: 0px;
+  padding: 0px;
+  border: 1px solid black;
+  height: 150px;
+  width: 150px;
+}

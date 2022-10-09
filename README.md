@@ -1,1 +1,2 @@
 # Tic-Tac-Toe
+This project will deal with creating the game tic-tac-toe with a simple user interaface. The goal of the project is to make it optimized. After creating the necessary restults I will make an AI that awill emloy the minmax algorithm.
