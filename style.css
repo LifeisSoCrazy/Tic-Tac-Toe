@@ -5,17 +5,22 @@ button {
   width: 50px;
 
 }
-table {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  height: 200vh;
-}
 
-td {
+.positions {
   margin: 0px;
   padding: 0px;
   border: 1px solid black;
-  height: 150px;
-  width: 150px;
+  height: 75vh;
+  width: 75vh;
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.position {
+  margin: 0px;
+  border: 1px solid black;
+  
 }
