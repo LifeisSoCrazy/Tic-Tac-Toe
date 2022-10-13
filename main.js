@@ -9,18 +9,22 @@ const choices = Array.from(document.querySelectorAll(".choice"));
 
 positions.forEach(position => {
   position.addEventListener('click', () => {
-    game_board.update_board(position);
-    console.log(position.innerText)
+    if(position.innerText == '') {
+      game_board.update_board(position);
+      console.log(position.innerText)
+    };
   })});
 
 
-first_move = ''
+let first_move = '';
 
+let current_move = '';
 
 choices.forEach(choice => {
   choice.addEventListener('click', () => {
-    first_move = choice.innerText;
-    console.log(first_move)
+    current_move = choice.innerText;
+    choice.disabled = true;
+    console.log(choice);
   });
 })
 
@@ -36,18 +40,17 @@ const game_board = (() => {
   const update_board = 
     // return letter based on players turn
     (e) => {
-
-      switch(first_move) {
-        case 'x':
-          e.innerText = 'x';
-          first_move = 'o';
-          break;
-        case 'o':
-        e.innerText = 'o';
-        first_move = 'x';
+    switch(current_move) {
+      case 'x':
+        e.innerText = 'x';
+        current_move = 'o';
         break;
-      }
-    }
+      case 'o':
+        e.innerText = 'o';
+        current_move = 'x';
+        break;
+    };
+  };
   
   const player_turn = (e) => {
     // Return players turn
