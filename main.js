@@ -25,24 +25,38 @@ const choices = Array.from(document.querySelectorAll(".choice"));
 let x = []
 let o = []
 
+
+
 positions.forEach(position => {
   position.addEventListener('click', () => {
     if(position.innerText == '') {
       game_board.update_board(position);
       if (position.innerText == 'x') {
-        console.log(position);
         x.push(position.id);
-      };
+        x.sort()
+        console.log(x)
+  
+        if(x.length >= 3) {
+          const winning_combinations = logic.winning_combinations()
+          const check_for_win = function check_for_win(winning_combinations, x) {
+            return winning_combinations.some(combination => {
+              return combination.every(index => {
+                return x == combination
+              }
+              )
+            }
+            )
+          }
+          check_for_win()
+        }
+      }
 
       if (position.innerText == 'o') {
         o.push(position.id);
-        console.log(o);
+        o.sort()
       };
-
-    };
-  });
-});
-
+    }})})
+  
 
 
 let current_move = '';
@@ -51,7 +65,6 @@ choices.forEach(choice => {
   choice.addEventListener('click', () => {
     current_move = choice.innerText;
     choice.disabled = true;
-    console.log(choice);
   });
 })
 
@@ -84,9 +97,8 @@ const game_board = (() => {
 
 
 
-
 const logic = function logic() {
-  const winning_combinations = [
+  const winning_combinations = () => [
     'A1', 'A2', 'A3',
     'B1', 'B2', 'B3',
     'C1', 'C2', 'C3',
@@ -98,11 +110,10 @@ const logic = function logic() {
     'A1', 'B2', 'C3',
     'A3', 'B2', 'C1',
   ];
-  const obtain_values = function obtain_values() {
-    // This function as of now will return if three values are made in the same row
-    const obtain_values = () => {
-        list_of_value_combinations = [];
-      };
-    };
-  return { winning_combinations, obtain_values }
-};
+  const check_for_win = () => {
+    // Will compare the values determined to the winning_combinations and return true or false
+    return x
+  }
+  return { winning_combinations, check_for_win }
+}();
+
