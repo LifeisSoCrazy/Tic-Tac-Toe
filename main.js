@@ -10,12 +10,6 @@ starting_page.style.minHeight = '100vh';
 starting_page.style.minWidth = '100vh';
 container.appendChild(starting_page);
 
-const winning_page = document.createElement('div');
-winning_page.classList.add('winning-page');
-winning_page.style.backgroundColor = 'black';
-winning_page.style.minHeight = '100vh';
-winning_page.style.minWidth = '100vh';
-container.appendChild(winning_page);
 
 const player = document.getElementsByClassName("player");
 const positions = Array.from(document.getElementsByClassName("position"));
@@ -72,10 +66,26 @@ const logic = (player_choice) => {
   for (let i=0; i < winning_combinations.length; i++) {
     winning_combinations.forEach(combination => {
       if (JSON.stringify(combination) === JSON.stringify(player_choice)) {
-        console.log(`${str(player_choice)} wins`)
+        player_wins(player_choice)
       }
     })
   }
+}
+
+const player_wins = function(winner) {
+  container.innerHTML = '';
+  let winning_message = document.createElement('div');
+  container.appendChild(winning_message)
+  winning_message.style.minHeight = '100vh';
+  winning_message.style.minWidth = '100vh';
+  winning_message.style.backgroundColor = 'black';
+  winning_message.style.textAlign = 'center';
+  winning_message.style.fontSize = 'xx-large';
+  winning_message.style.color = 'white';
+
+
+
+  winning_message.innerText = `Congratulations Player ${winner}, you won as X!`
 }
 
 positions.forEach(position => {
@@ -86,16 +96,16 @@ positions.forEach(position => {
         x.push(position.id);
         x.sort();
         logic(x);
-      }
+      };
       if (position.innerText == 'o') {
         o.push(position.id);
         o.sort()
-        logic(x);
-
+        logic(o);
       };
-    }})});
-  
-
+    };
+  });
+});
+    
 
 let current_move = '';
 

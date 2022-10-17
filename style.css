@@ -32,11 +32,10 @@ button {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 
-  
 }
 
 .position {
-  background-color: rgb(113, 15, 15);
+  background-color: white;
   text-align: center;
   min-width: 100px;
   min-height: 100%; 
