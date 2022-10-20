@@ -1,20 +1,52 @@
 // Make starting HTML page that asks for names and choice (x or y)
 const container = document.getElementById('container');
 
-const starting_page = document.createElement('div');
-starting_page.classList.add('starting-page');
-starting_page.innerText = 'dddds';
-starting_page.style.minHeight = '100%';
-starting_page.style.backgroundColor = 'black';
-starting_page.style.minHeight = '100vh';
-starting_page.style.minWidth = '100vh';
-container.appendChild(starting_page);
 
 
 const player = document.getElementsByClassName("player");
-const positions = Array.from(document.getElementsByClassName("position"));
+const positions = Array.from(document.querySelectorAll(".position"));
 const reset = document.getElementsByClassName("reset")
-const choices = Array.from(document.querySelectorAll(".choice"));
+
+
+const starting_page = () => {
+  const starting_page = document.createElement('div');
+  starting_page.classList.add('starting-page');
+  starting_page.style.position = 'fixed';
+  starting_page.style.top = '0%';
+  starting_page.style.left = '0';
+  starting_page.style.right = '0';
+  starting_page.style.bottom = '0';
+  starting_page.style.backgroundColor = 'rgba(0, 0, 0, .9)';
+  starting_page.style.justifyContent = 'center';
+  starting_page.style.alignContent = 'center';
+  starting_page.style.color = 'white';
+  starting_page.style.textAlign = 'center'
+  starting_page.style.fontSize = 'xx-large'
+  starting_page.innerText = "Choose your move X or O: "
+  document.body.appendChild(starting_page)
+
+  const first_move = document.createElement('div');
+  first_move.classList.add('first-move');
+  starting_page.appendChild(first_move);
+  
+  const choice_x = document.createElement('button');
+  choice_x.classList.add('choice');
+  choice_x.innerText = 'X';
+  choice_x.style.alignItems = 'center';
+  choice_x.style.fontSize = '3 rem'
+
+  const choice_o = document.createElement('button');
+  choice_o.classList.add('choice');
+  choice_o.innerText = 'O';
+  choice_o.style.alignItems = 'center';
+  choice_o.style.fontSize = '3 rem'
+
+
+  first_move.append(choice_x, choice_o)
+
+}
+
+starting_page()
 
 const game_board = (() => {
   const reset_board = () => {
@@ -109,9 +141,10 @@ positions.forEach(position => {
 
 let current_move = '';
 
+const choices = Array.from(document.querySelectorAll(".choice"));
 choices.forEach(choice => {
   choice.addEventListener('click', () => {
-    current_move = choice.innerText;
-    choice.disabled = true;
-  });
-})
+  current_move = choice.innerText;
+  console.log(current_move)
+  document.querySelector(".starting-page").innerHTML = '';
+})})
