@@ -39,42 +39,25 @@ const starting_page = () => {
   choice_o.classList.add('choice');
   choice_o.innerText = 'O';
   choice_o.style.alignItems = 'center';
-  choice_o.style.fontSize = '3 rem'
+  choice_o.style.fontSize = '3 rem';
 
-
-  first_move.append(choice_x, choice_o)
-
+  first_move.append(choice_x, choice_o);
 }
 
 starting_page()
 
-const game_board = (() => {
-  const reset_board = () => {
-    positions.forEach(position => {
-      position.innerText = '';
-    });
-  };
-  
-  const update_board = 
-  // return letter based on players turn
-    (e) => {
-    switch(current_move) {
-      case 'x':
-        e.innerText = 'x';
-        current_move = 'o';
-        break;
-      case 'o':
-        e.innerText = 'o';
-        current_move = 'x';
-        break;
-    };
-  };
-    
-  return {reset_board, update_board,};
-})();
+// Getting the player's choice for first move
 
+let current_move = '';
+const choices = Array.from(document.querySelectorAll(".choice"));
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      current_move = choice.innerText;
+      document.querySelector(".starting-page").remove();
+  });
+});
 
-
+// Code for the logic
 
 const winning_combinations = 
 [
@@ -90,21 +73,33 @@ const winning_combinations =
   ['A3', 'B2', 'C1'],
 ];
 
-let x = [];
-let o = [];
 
 
-const logic = (player_choice) => {
-  for (let i=0; i < winning_combinations.length; i++) {
-    winning_combinations.forEach(combination => {
-      if (JSON.stringify(combination) === JSON.stringify(player_choice)) {
-        player_wins(player_choice)
-      }
+const logic = () => {
+  winning_combinations.forEach(combination => {
+    let a = document.querySelector(`#${combination[0]}`).innerText;
+    let b = document.querySelector(`#${combination[1]}`).innerText;
+    let c = document.querySelector(`#${combination[2]}`).innerText;
+    let tie_checker = []
+    positions.forEach(position => {
+      tie_checker.push(position.innerText);
     })
-  }
+    if (tie_checker.includes('')) {
+      if (a != '' || b != '' || c != '') {
+        if (a === b && b === c) {
+          player_wins(a);    
+        }
+      }
+    }
+    if (!tie_checker.includes('')) {
+      // For tie
+      player_tie()
+    }
+    }
+  )
 }
 
-const player_wins = function(winner) {
+player_tie = () => {
   container.innerHTML = '';
   let winning_message = document.createElement('div');
   container.appendChild(winning_message)
@@ -114,37 +109,60 @@ const player_wins = function(winner) {
   winning_message.style.textAlign = 'center';
   winning_message.style.fontSize = 'xx-large';
   winning_message.style.color = 'white';
+  winning_message.innerText = 'Tie! Click Reset to Play Again';
 
-
-
-  winning_message.innerText = `Congratulations Player ${winner}, you won as X!`
 }
 
-positions.forEach(position => {
-  position.addEventListener('click', () => {
-    if(position.innerText == '') {
-      game_board.update_board(position);
-      if (position.innerText == 'x') {
-        x.push(position.id);
-        x.sort();
-        logic(x);
-      };
-      if (position.innerText == 'o') {
-        o.push(position.id);
-        o.sort()
-        logic(o);
+const player_wins = function(winner ='Tie') {
+  container.innerHTML = '';
+  let winning_message = document.createElement('div');
+  container.appendChild(winning_message)
+  winning_message.style.minHeight = '100vh';
+  winning_message.style.minWidth = '100vh';
+  winning_message.style.backgroundColor = 'gray';
+  winning_message.style.textAlign = 'center';
+  winning_message.style.fontSize = 'xx-large';
+  winning_message.style.color = 'white';
+  winning_message.innerText = `Congratulations Player ${winner}, you won as ${winner}`
+}
+
+
+// Making reset and updating the screen function
+const game_board = (() => {
+  const reset_board = () => {
+    positions.forEach(position => {
+      position.innerText = '';
+    });
+  };
+
+  const update_board = 
+  // return letter based on players turn
+  (e) => {
+    switch(current_move) {
+      case 'X':
+        e.innerText = 'X';
+        current_move = 'O';
+        break;
+      case 'O':
+        e.innerText = 'O';
+        current_move = 'X';
+        break;
       };
     };
+  return {reset_board, update_board,};
+  }
+)();
+
+positions.forEach(position => {
+    position.addEventListener('click', () => {
+      if(position.innerText === '') {
+        game_board.update_board(position);
+        if (position.innerText == 'X') {
+          logic();
+        };
+        if (position.innerText == 'O') {
+          logic();
+        };
+      };
+    });
   });
-});
-    
-
-let current_move = '';
-
-const choices = Array.from(document.querySelectorAll(".choice"));
-choices.forEach(choice => {
-  choice.addEventListener('click', () => {
-  current_move = choice.innerText;
-  console.log(current_move)
-  document.querySelector(".starting-page").innerHTML = '';
-})})
